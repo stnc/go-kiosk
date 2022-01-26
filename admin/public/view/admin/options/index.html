@@ -1,0 +1,274 @@
+<!--Loop over the `payload` variable, which is the list of articles-->
+{% extends "../app.html" %} {% block content %} 
+{% set RootName = 'admin-hayvanBilgisi' %} {% set routerName = 'admin/options' %}
+<style>
+    .text-decoration-line-through {
+        text-decoration: line-through !important;
+    }
+</style>
+
+
+
+{% if flashMsg %}
+
+<!-- alert -->
+<div class="alert alert-info alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-check"></i> Uyarı!</h5>
+    {{flashMsg}}
+</div>
+<!-- /.alert -->
+
+{%endif%}
+
+
+
+
+<form method="POST" action="/{{routerName}}/update" accept-charset="UTF-8" class="form-control1" id="{{RootName}}-update" enctype="multipart/form-data">
+    <input name="_csrf" type="hidden" value="{{ csrf }}">
+    <input name="_method" type="hidden" value="PUT">
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+    
+            <div class="col-md-12">
+                <div class="card">
+
+
+                    <div class="card-body">
+                        <input class="form-control {{err.ID}}" id="ID" name="ID" value="{{post.ID}}" type="hidden">
+
+                        <button class="btn btn-sm btn-primary" type="submit"> Kaydet</button>
+                        <button class="btn btn-sm btn-danger" type="reset"> VAZGEÇ</button>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+    
+            <div class="col-md-12">
+                <div class="card">
+
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="pageRenewTime">Sayfa yenilenme süresi [dakika olarak] </label>
+                            <input class="form-control" id="pageRenewTime" name="pageRenewTime" value="{{pageRenewTime}}" type="text"> 
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="pageRenewStatus">Sayfa Yenileme açık olsun mu [eğer yeni slider girişi yaptıysanız açık bırakınız] </label>
+                            <select name="pageRenewStatus" class="form-control">
+                                <option {% if pageRenewStatus=="1" %} selected  {% endif %} value="1">Açık</option>
+                                <option  {% if pageRenewStatus=="2" %} selected  {% endif %} value="2">Kapalı</option>
+                              </select>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>DÖVİZ-ALTIN verileri</strong>
+                            <!-- <small>Form</small> -->
+                        </div>
+
+
+                        <div class="card-body">
+
+
+
+                            <div class="form-group">
+                                <label for="dolar">Dolar </label>
+                                <input class="form-control" id="dolar" name="dolar" value="{{dolar}}" type="text"> 
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="euro">Euro</label>
+                                <input class="form-control" id="euro" name="euro" value="{{euro}}" type="text"> 
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="altin">Altın</label>
+                                <input class="form-control" id="altin" name="altin" value="{{altin}}" type="text"> 
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ceyrek_altin">Çeyrek Altın</label>
+                                <input class="form-control" id="ceyrek_altin" name="ceyrek_altin" value="{{ceyrek_altin}}" type="text"> 
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>HAVA DURUMU</strong>
+                            <small>Form</small>
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                           
+                            <!-- <div class="form-group">
+                                <label for="weatherToday">Gün</label>
+                                <input class="form-control" id="weatherToday" name="weatherToday" value="{{weatherToday}}" type="text"> 
+                            </div> -->
+
+
+                            <div class="form-group">
+                                <label for="weatherTodayIcon">İkon</label>
+                                <input class="form-control" id="weatherTodayIcon" name="weatherTodayIcon" value="{{weatherTodayIcon}}" type="text"> 
+                            </div>   
+                            
+                            <div class="form-group">
+                                <label for="weatherTodayDescription">Açıklama</label>
+                                <input class="form-control" id="weatherTodayDescription" name="weatherTodayDescription" value="{{weatherTodayDescription}}" type="text"> 
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="weatherTodayDegree">Gündüz Hava sıcaklığı   </label>
+                                <input class="form-control" id="weatherTodayDegree" name="weatherTodayDegree" value="{{weatherTodayDegree}}" type="text"> 
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weatherTodayNight">Gece Hava sıcaklığı </label>
+                                <input class="form-control" id="weatherTodayNight" name="weatherTodayNight" value="{{weatherTodayNight}}" type="text"> 
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weatherTodayHumidity">Nem Oranı </label>
+                                <input class="form-control" id="weatherTodayHumidity" name="weatherTodayHumidity" value="{{weatherTodayHumidity}}" type="text"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Covid 19 Verileri</strong>
+                            <!-- <small>Form</small> -->
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                           
+                            <div class="form-group">
+                                <label for="covid19Confirmed">Toplam Vaka Sayısı</label>
+                                <input class="form-control" id="covid19Confirmed" name="covid19Confirmed" value="{{covid19Confirmed}}" type="text"> 
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="covid19Deaths">Toplam Vefat Sayısı</label>
+                                <input class="form-control" id="covid19Deaths" name="covid19Deaths" value="{{covid19Deaths}}" type="text"> 
+                            </div>   
+                            
+                            <div class="form-group">
+                                <label for="covid19Recovered">Toplam iyileşen Sayısı</label>
+                                <input class="form-control" id="covid19Recovered" name="covid19Recovered" value="{{covid19Recovered}}" type="text"> 
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="covid19Aktive">Aktif Vaka Sayısı  </label>
+                                <input class="form-control" id="covid19Aktive" name="covid19Aktive" value="{{covid19Aktive}}" type="text"> 
+                            </div>
+
+                 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+        
+                <div class="col-md-12">
+                    <div class="card">
+    
+    
+                        <div class="card-body">
+                            <input class="form-control {{err.ID}}" id="ID" name="ID" value="{{post.ID}}" type="hidden">
+    
+                            <button class="btn btn-sm btn-primary" type="submit"> Kaydet</button>
+                            <button class="btn btn-sm btn-danger" type="reset"> VAZGEÇ</button>
+    
+    
+                        </div>
+    
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+{% endblock %}
+
+{% block jsInline %}
+<script src="/assets/admin/js/jquery.mask.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+    $(function() { 
+        $('#SatisBirimFiyati1').mask('###0.00', {reverse: true});
+        $('#SatisBirimFiyati2').mask('###0.00', {reverse: true});
+        $('#SatisBirimFiyati3').mask('###0.00', {reverse: true});
+        $('#alis_birim_fiyati_1').mask('###0.00', {reverse: true});
+        $('#alis_birim_fiyati_2').mask('###0.00', {reverse: true});
+        $('#alis_birim_fiyati_3').mask('###0.00', {reverse: true});
+    });
+
+
+</script>
+{% endblock %}

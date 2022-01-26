@@ -1,0 +1,304 @@
+<!--Loop over the `payload` variable, which is the list of articles-->
+{% extends "../app.html" %}
+
+{% block content %}
+
+{% set RootName = 'admin-kiosk2Slider' %}
+
+{% set routerName = 'admin/kiosk2Slider' %}
+
+
+
+{% if flashMsg %}
+<div class="row">
+    <!-- alert -->
+    <div class="col-md-12 flashMsg">
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert"> {{flashMsg}}
+            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">×</span></button>
+
+        </div>
+    </div>
+    <!-- /.alert -->
+
+</div>
+{%endif%}
+
+<form method="POST" action="/{{routerName}}/update" accept-charset="UTF-8" enctype="multipart/form-data">
+    <input name="_csrf" type="hidden" value="{{ csrf }}">
+    <input name="_method" type="hidden" value="PUT">
+    <input name="MenuOrder" type="hidden" value="1">
+    <div class="row">
+
+
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>{% if title %} {{ title }} - Editör {% else %} CMS EDİTOR
+                                {% endif %}</strong>
+                            <small>SLİDER EDİTÖR</small>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="Title">İçerik Başlığı</label>
+                                <input class="form-control {{err.Title_valid}}" id="Title" name="Title"
+                                    value="{{data.Title}}" type="text" placeholder="Site Başlığı">
+                                {% if err.Title_error %}
+                                <div class="invalid-feedback" style="display:block">{{err.Title}}</div>
+                                {% endif %}
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Resim Bilgileri</strong>
+                        </div>
+
+                        <div class="card-body">
+                            <strong style="color: brown;">Resim 1815w*2510h pixel olmalıdır, resim boyutu farklı olsa bile 
+                                 1815*2510 boyutuna ayarlanır</strong>
+                            <br>
+                            VİDEO 
+                            <strong style="color: brown;">Video Boyutu 1815w*2510h pixel olmalıdır. Video sistem tarafından 
+                                 boyutlandırılmaz daha küçük boyutta olması kiosk da görünüm sorunlarına yol açabilir</strong>
+
+                            <div class="col-md-12">
+                                <div id="alanOnizleme">
+                                    <h5 class="text-center">Seçtiğiniz Resim / VİDEO:</h5>
+
+                                    {% if data.Type==2 %}
+                                    <video controls width="100%">
+                                        <source src="/upload/kiosk/{{data.Picture}}"
+                                                type="video/mp4">
+                                    
+                                        Sorry, your browser doesn't support embedded videos.
+                                     </video>
+                                    
+
+                                     {% else  %}
+                                    <a href="/upload/kiosk/big/{{data.Picture}}"  data-toggle="modal" data-target="#imagemodal">
+                                         <img id="resimOnizleme" src="/upload/kiosk/thumb/{{data.Picture}}" class="w-50" />
+                                    </a>
+                                   
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#imagemodal">
+                                        Büyük hali için tıklayınız 
+                                    </button>
+
+                                    <button type="button" class="btn btn-warning picture-delete" >
+                                        Resmi silmek için tıklayınız
+                                    </button>
+                                    {% endif  %}
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-md-3* col-form-label" for="file-input"></label>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="Resim2" value="{{data.Picture}}" id="Resim2">
+                                    <input type="file" class="{{err.Picture_valid}}" name="Picture"
+                                        value="{{data.Picture}}" id="Picture">
+                                </div>
+                                {% if err.Picture_error %}
+                                <div class="invalid-feedback feedbackPicture" style="display:block">
+                                    {{err.Picture_error}}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Yayın Bilgileri</strong>
+                        </div>
+
+                        <div class="card-body">
+                          
+                    
+
+
+                            <div class="form-group col-sm-12">
+                                <label for="Status">Durum</label>
+                                <select class="form-control  {{err.Status_valid}}"
+                                    name="Status" id="Status">
+                                    <option {%if data.Status==0 %} selected {% endif %} value="0">
+                                        Yayından Kaldır
+                                    </option>
+
+                                    <option {%if data.Status==1 %} selected {% endif %} value="1">
+                                        Yayınla
+                                    </option>
+
+                                    <option {%if data.Status==2 %} selected {% endif %} value="2">
+                                        Taslak Olarak Beklet
+                                    </option>
+
+                                    <option {%if data.Status==3 %} selected {% endif %} value="3">
+                                        Arşive Ekle
+                                    </option>
+                                </select>
+                            </div>
+
+<span> <strong>Açıklamalar</strong> <br>
+    <strong>Taslak Olarak Beklet:</strong> Resim yada video daha sonra yayınlanmak üzere bekletilir  ve sistem üzerinde resim orjinal boyutları ile saklanır, 
+    KİOSK ekranlarda görünmez
+    <br>
+    <br>
+   <strong> Yayından Kaldır:</strong> Resim yada video yayından kaldırılır ve sistem üzerinde resim orjinal boyutları ile saklanır,
+   KİOSK ekranlarda görünmez
+   <br>
+   <br>
+
+   <strong> Yayınla:</strong> Resim yada video KİOSK ekranlarda görüntülenir.
+   <br>
+   <br>
+   <strong> Arşive Ekle :</strong> Resim yada video yayından kaldırılır ama sistem üzerinde sadece resimlerin çok küçük halleri saklanır, büyük halleri silinir,
+   KİOSK ekranlarda görünmez
+
+
+
+</span>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Yayınlanacağı Binalar</strong>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label> Seçiniz (mecburi değildir)</label>
+                                <div>
+                                    {% for cat in catsData%}
+                                    <div class="form-check checkbox">
+                                        <input class="form-check-input" id="catr-{{ cat.ID }}" {%if cat.ID==cat.SelectedID %} checked {% endif %} name="cats" type="checkbox" value="{{ cat.ID }}">
+                                        <label class="form-check-label" for="catr-{{ cat.ID }}">{{ cat.Name|title }}</label>
+                                    </div>
+
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+           
+
+
+
+
+          
+
+                <div class="col-md-12">
+
+
+                    <div class="card-footer">
+                        <input class="form-control {{err.ID}}" id="ID" name="ID" value="{{data.ID}}" type="hidden">
+
+                        <button class="btn btn-sm btn-primary" type="submit"> Kaydet</button>
+                        <a class="btn btn-sm btn-danger" href="/{{routerName}}/" type="reset"> VAZGEÇ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+</form>
+
+
+
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog" data-dismiss="modal">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal"><span
+                    aria-hidden="true">&times;</span><span
+                    class="sr-only">Close</span></button>
+            <img src="/upload/kiosk/big/{{data.Picture}}" class="imagepreview" style="width: 100%;">
+        </div>
+
+
+
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+{% endblock %} {% block jsInline %}
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+        
+        $(".picture-delete").click(function (e) {
+            $("#Resim2").val("");
+            $("#alanOnizleme").hide();
+
+        });
+
+
+        $("#Picture").change(function (e) {
+
+            $(".feedbackPicture").hide();
+            $("#alanOnizleme").show();
+            $("#resimOnizleme").attr('src', URL.createObjectURL(e.target.files[0]));
+        });
+    });
+
+
+
+</script>
+
+
+{% endblock %}

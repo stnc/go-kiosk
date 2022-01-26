@@ -1,0 +1,1 @@
+https://golang.org/src/go/doc/example.go

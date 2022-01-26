@@ -1,0 +1,169 @@
+<!-- 1 -->
+<link href="/assets/admin/stnc-upload/css/dropzone.min.css" type="text/css" rel="stylesheet" />
+<link href="/assets/admin/stnc-upload/css/toastr.min.css" type="text/css" rel="stylesheet" />
+
+<!-- 2 -->
+<script src="/assets/admin/stnc-upload/js/dropzone.min.js"></script>
+<script src="/assets/admin/stnc-upload/js/dropzone.dict-tr.js"></script>
+<script src="/assets/admin/stnc-upload/js/toastr.min.js"></script>
+<!-- <script src="/assets/admin/js/glimpse.toastr.js"></script> -->
+<script src="/assets/admin/stnc-upload/js/jquery.magnific-popup.min.js"></script>
+
+<script>
+    Dropzone.autoDiscover = false;
+
+    // Get the template HTML and remove it from the doument
+    var previewNode = document.querySelector("#template");
+    previewNode.id = "";
+    var previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
+
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        url: "/admin/kioskSlider/upload/{{data.ID}}", // Set the url
+    
+        init: function () {
+            this.on("sending", function (file, xhr, formData) {
+                formData.append("_csrf", "{{ csrf }}");
+                console.log(formData)
+            });
+
+        },
+        addRemoveLinks: true,
+       maxFiles:  {{ fileConfig.maxFiles }}, //https://www.infinetsoft.com/Post/How-to-set-limits-for-file-upload-in-dropzone-js/2534#.YIvbS2YzbJ9
+       maxFilesize: {{ fileConfig.uploadSize }},//max file size in MB,
+        acceptedFiles:  "{{ fileConfig.fileType }}", //  acceptedFiles: 'image/*,"
+     //   acceptedFiles-: 'audio/mpeg,image/png', 
+        thumbnailWidth: 80,
+        thumbnailHeight: 80,
+        parallelUploads: 20,
+        previewTemplate: previewTemplate,
+        autoQueue: false, // Make sure the files aren't queued until manually added
+        previewsContainer: "#previews", // Define the container to display the previews
+        clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    });
+
+    myDropzone.on("addedfile", function (file) {
+        // Hookup the start button
+
+        file.previewElement.querySelector(".start").onclick = function () {
+            myDropzone.enqueueFile(file);
+        };
+    });
+
+
+    // Update the total progress bar
+    myDropzone.on("totaluploadprogress", function (progress) {
+        document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+    });
+
+    myDropzone.on("sending", function (file) {
+        // Show the total progress bar when upload starts
+        document.querySelector("#total-progress").style.opacity = "1";
+        // And disable the start button
+        file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+    });
+
+    // Hide the total progress bar when nothing's uploading anymore
+    myDropzone.on("queuecomplete", function (progress) {
+        document.querySelector("#total-progress").style.opacity = "0";
+    });
+
+    // Setup the buttons for all transfers
+    // The "add files" button doesn't need to be setup because the config
+    // `clickable` has already been specified.
+    document.querySelector("#actions .start").onclick = function () {
+        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+    };
+    document.querySelector("#actions .cancel").onclick = function () {
+        //alert("ipral")
+        myDropzone.removeAllFiles(true);
+    };
+    //TODO: jquery document ile yapılması gerekiyor 
+  //  document.querySelector("#previews .delete").onclick = function () {
+  //      myDropzone.removeAllFiles(true);
+  //  };
+
+  $(document).ready(function() {
+    $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+      disableOn: 700,
+      type: 'iframe',
+      mainClass: 'mfp-fade',
+      removalDelay: 160,
+      preloader: false,
+
+      fixedContentPos: false
+    });
+
+
+    $('.popup-gallery').magnificPopup({
+      delegate: 'a.image',
+      type: 'image',
+      tLoading: 'Loading image #%curr%...',
+      mainClass: 'mfp-img-mobile',
+      gallery: {
+        enabled: true,
+        navigateByImgClick: true,
+        preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+      },
+      image: {
+        tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+        titleSrc: function(item) {
+          return item.el.attr('title') + '<small>STNC</small>';
+        }
+      }
+    });
+
+    $('.stncElemMedia').click(function(e){
+      e.preventDefault();
+      var id = $(this).data('id');
+  
+      ajaxCall(id)
+    });
+
+    function ajaxCall(id) {
+      fetch("/admin/kioskSlider/media-delete/"+id, {
+        method: 'GET',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json()
+          } else {
+            console.log("error")
+          }
+        }) 
+        .then(data => {
+
+    
+          if (data.status) {
+            $( ".elemMedia-"+id ).remove();
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            toastr["success"]("Başarı İle Silindi")
+          } 
+
+        })
+        .catch((error) => {
+          console.log("error")
+        });
+      }
+
+
+  });
+
+</script>

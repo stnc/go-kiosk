@@ -1,0 +1,229 @@
+<!--Loop over the `payload` variable, which is the list of articles-->
+{% extends "../app.html" %} 
+{% block content %} 
+{% set RootName = 'admin-kioskSlider' %}
+ {% set routerName ='admin/kioskSlider' %} 
+ 
+ {% if flashMsg %}
+<div class="row">
+    <!-- alert -->
+    <div class="col-md-12 flashMsg">
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert"> {{flashMsg}}
+            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">×</span></button>
+
+        </div>
+    </div>
+    <!-- /.alert -->
+
+</div>
+{%endif%}
+
+<form method="POST" action="/{{routerName}}/store" accept-charset="UTF-8" enctype="multipart/form-data">
+    <input name="_csrf" type="hidden" value="{{ csrf }}">
+    <input name="_method" type="hidden" value="PUT">
+    <input name="MenuOrder" type="hidden" value="1">
+    <div class="row">
+
+
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>{% if title %} {{ title }} - Editör {% else %} CMS Editör
+                                {% endif %}</strong>
+                            <small>SLİDER EDİTÖR</small>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="Title">İçerik Başlığı</label>
+                                <input class="form-control {{err.Title_valid}}" id="Title" name="Title"
+                                    value="{{data.Title}}" type="text" placeholder="Site Başlığı"> 
+                               {% if err.Title_error  %}
+                                <div class="invalid-feedback" style="display:block">{{err.Title}}</div>
+                                {% endif %}
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+          
+
+
+                <div class="col-md-12">
+                    <div style="    border: 2px dashed #0087F7; padding:50px" class="dropzone needsclick dz-clickable">
+                        <div class="dz-message needsclick">
+                         
+                
+
+                                <div class="alert alert-danger" role="alert">
+
+                                    <span class="note needsclick">Resim yükleme işlemini  <strong>bilgileri kaydettikden</strong> sonra 
+                                        yapabilirsiniz</span>
+                                </div>
+                                
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Yayın Bilgileri</strong>
+                        </div>
+
+
+                        <div class="card-body">
+
+
+
+                            <div class="form-group col-sm-12">
+                                <label for="Title">Görüntülenme Sırası</label>
+                                <input class="form-control {{err.MenuOrder_valid}}" id="MenuOrder" name="MenuOrder"
+                                    value="{{data.MenuOrder}}" type="text" placeholder="Görüntülenme Sırası"> 
+                                    {% if err.MenuOrder_error %}
+                                <div class="invalid-feedback" style="display:block">{{err.MenuOrder}}</div>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="form-group col-sm-12">
+                                <label for="Title">Ekranda Görünme Süresi [saniye olarak]</label>
+                                <input class="form-control {{err.Timer_valid}}" id="Timer" name="Timer"
+                                    value="{{data.Timer}}" type="text" placeholder="Ekranda Görünme Süresi"> 
+                                    {% if err.Timer_error %}
+                                <div class="invalid-feedback" style="display:block">{{err.Timer}}</div>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="form-group col-sm-12">
+                                <label for="Status">Durum</label>
+                                <select class="form-control  {{err.Status_valid}}" name="Status" id="Status">
+
+
+                                    <option {%if data.Status==1 %} selected {% endif %} value="1">
+                                        Yayınla
+                                    </option>
+
+                                    <option {%if data.Status==2 %} selected {% endif %} value="2">
+                                        Taslak Olarak Beklet
+                                    </option>
+
+
+                                </select>
+                            </div>
+
+                            <span> <strong>Açıklamalar</strong> <br>
+                                <strong> Yayınla:</strong> Resim yada video KİOSK ekranlarda görüntülenir.
+                                <br>
+                                <br>
+                                <strong>Taslak Olarak Beklet:</strong> Resim yada video daha sonra yayınlanmak üzere
+                                bekletilir ve sistem üzerinde resim orjinal boyutları ile saklanır,
+                                KİOSK ekranlarda görünmez
+                            </span>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Yayınlanacağı Binalar</strong>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label> Seçiniz (mecburi değildir)</label>
+                                <div>
+                                    {% for cat in catsData %}
+                                    <div class="form-check checkbox">
+                                        <input class="form-check-input" id="catr-{{ cat.ID }}" {%if cat.ID==cat.SelectedID %} checked {% endif %} name="cats" type="checkbox"
+                                            value="{{ cat.ID }}">
+                                        <label class="form-check-label" for="catr-{{ cat.ID }}">{{ cat.Name|title }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Kısa açıklama</strong>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Excerpt">Kısa açıklama <span> *başlık metinlerde olan </span> </label>
+                                <textarea class="form-control {{err.Excerpt_valid}}" id="Excerpt" name="Excerpt"
+                                    rows="9" placeholder="Kısa Açıklama...">{{ data.Excerpt }}</textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+
+                    <div class="card-footer">
+                        <input class="form-control {{err.ID}}" id="ID" name="ID" value="{{data.ID}}" type="hidden">
+
+                        <button class="btn btn-sm btn-primary" type="submit"> Kaydet</button>
+                        <a class="btn btn-sm btn-danger" href="/{{routerName}}/" type="reset"> VAZGEÇ</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+</form>
+
+
+
+
+
+
+
+
+{% endblock %} {% block jsInline %}
+
+
+
+
+{% endblock %}

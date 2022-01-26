@@ -1,0 +1,262 @@
+<!--Loop over the `payload` variable, which is the list of articles-->
+{% extends "../app.html" %} 
+
+{% block content %} 
+
+<div class="row">
+    <div class="col-sm-12 col-lg-12">
+
+      <div class="col-sm-12 col-lg-12">
+        <div class="stnc-kiosk-top">
+          <div class="row">
+
+            <div class="col-sm-12 col-lg-12">
+              <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for data in allData %}
+                    
+                       {% if data.Type==1 %}
+                       <div class="swiper-slide" data-swiper-autoplay="{{data.Timer * 1000}}">
+                        <img src="https://crm.erciyesteknopark.com/upload/kiosk/big/{{data.Picture}}" class="img-fluid">
+                      </div>
+                       {% else %}
+                       <div class="swiper-slide videoSlide" data-swiper-autoplay="{{data.Timer * 1000}}">
+                        <div style="background-color: #000;" class="container-fluid-sel h-100">
+                          <div class="row h-100">
+                            <div class="col-12 my-auto">
+    
+                              <video muted loop controls class="video-js vjs-default-skin vjs-big-play-centered"
+                                style="background-color: #000;" controls preload="auto" width="100%" height="100%"
+                                data-setup='{"fluid": true}'>
+                                <source src="https://crm.erciyesteknopark.com/upload/kiosk/{{data.Picture}}" type="video/mp4">
+                              </video>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+    
+                      {% endif  %} 
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-12">
+        <div class="stnc-kiosk-bottom">
+
+          <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+
+              <div class="row">
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                  <!-- CLOCK -->
+                  <div class="clock">
+
+
+                    <!-- HOUR -->
+                    <div class="numbers">
+                      <p class="hours"></p>
+                      <p class="placeholder">88</p>
+                    </div>
+
+                    <div class="colon">
+                      <p>:</p>
+                    </div>
+
+                    <!-- MINUTE -->
+                    <div class="numbers">
+                      <p class="minutes"></p>
+                      <p class="placeholder">88</p>
+                    </div>
+
+                    <div class="colon">
+                      <p>:</p>
+                    </div>
+
+                    <!-- SECOND -->
+                    <div class="numbers">
+                      <p class="seconds"></p>
+                      <p class="placeholder">88</p>
+                    </div>
+
+                  </div><!-- END CLOCK -->
+
+
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                  <div id="tarih"  class="tarih justify-content-center align-self-center ">2 Nisan Cuma</div>
+                </div>
+
+
+              </div>
+            </div>
+
+
+
+            <div class="col-md-8 col-sm-8 col-lg-8">
+
+              <div class="row">
+
+
+                <div class="col-md-3 col-sm-3 col-lg-3">
+                  <div class="dollar">
+                    <i class="fa fa-usd" aria-hidden="true"></i>
+                    <br>
+                    <span id="jsonDollarData"> {{dolar}} </span> <span>TL</span>
+                    <br>
+                    <strong style="color: white; "> Dolar </strong>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-lg-3">
+                  <div class="dollar">
+                    <i class="fa fa-euro" aria-hidden="true"></i>
+                    <br>
+                    <!-- ₺ -->
+                    <span id="jsonEuroData">  {{euro}} </span><span>  TL</span>
+                    <br>
+                    <strong style="color: white; "> Euro </strong>
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-3 col-sm-3 col-lg-3">
+                  <div class="dollar">
+                    <i class="fa fa-sun-o" aria-hidden="true"> </i>
+                    <br>
+                    <span  id="jsonAltinData"> {{altin}} </span> <span>TL</span>
+                    <br>
+                    <strong style="color: white; "> Altın </strong>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-lg-3">
+                  <div class="dollar">
+                    <i class="fa fa-sun-o" aria-hidden="true"> </i>
+                    <br>
+                    <span id="jsonCeyrekAltinData"> {{ceyrek_altin}}</span> <span> TL</span><br> <strong style="color: white; "> Çeyrek altın </strong>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+
+
+          </div>
+          <div class="row">
+
+            <div class="col-sm-6 col-md-6">
+
+            <div class="single-weather-widget">
+                      <div class="row">
+                        <div class="col-sm-8 col-md-8 "> 
+                          <div class="details">
+                            <div class="temperature"><span id="weatherTodayDegreeJson">{{weatherTodayDegree}}</span> °</div>
+                            <div class="summary">
+                              <p class="summaryText" id="weatherTodayDescriptionJson">{{weatherTodayDescription}} </p>
+                            </div>
+                            <div class="precipitation">Gece Sıcaklığı: <span id="weatherTodayNightJson">{{weatherTodayNight}}</span> ° </div>
+                            <div class="wind">Nem: % <span id="weatherTodayHumidityJson">{{weatherTodayHumidity}}</span></div>
+                          </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                          <figure class="mx-auto justify-content-center align-self-center float-right">
+                            <img id="weatherTodayIconJson" src="{{weatherTodayIcon}}" height="150px"
+                              width="250px" class="img-fluid" alt="">
+                          </figure>
+
+                        </div>
+                      </div>
+                  
+                    </div>
+                  
+   <!-- burada slider hava durumu   -->
+
+            </div>
+
+
+
+
+
+            <div class="col-sm-6 col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-warning text-center text-black" style="font-weight: bold;" role="alert">
+                    TÜRKİYE COVID-19 HASTA TABLOSU</div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-bottom: 20px;">
+
+                <div class="col-sm-6 col-md-6">
+                  <div class="card">
+                    <div class=" btn btn-primary">
+                      <h2 class="fw-light text-white">{{Covid19Confirmed}}</h2>
+                      <h6 class="text-white Confirmed">Toplam Vaka Sayısı</h6>
+                    </div>
+                  </div>
+                </div>
+
+                <div class=" col-sm-6 col-md-6">
+                  <div class="card">
+                    <div class="btn btn-danger">
+                      <h2 class="fw-light text-white">{{Covid19Deaths}}</h2>
+                      <h6 class="text-white Deaths">Toplam Vefat Sayısı</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6 col-md-6">
+                  <div class="card">
+                    <div class="btn btn-success">
+                      <h2 class="fw-light text-black"> {{Covid19Recovered}} </h2>
+                      <h6 class="text-black Recovered">Toplam iyileşen Sayısı</h6>
+                    </div>
+                  </div>
+                </div>
+
+                <div class=" col-sm-6 col-md-6">
+                  <div class="card">
+                    <div class=" btn btn-warning">
+                      <h2 class="fw-light text-black">{{Covid19Aktive}}</h2>
+                      <h6 class="text-black Active">Aktif Vaka Sayısı</h6>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <span class="mx-auto" style="color: white; font-size:15px; text-align:center "><strong>
+                    Tüm verilerin son güncellenme zamanı</strong> 
+                      <span class="last-update">08.04.2021 10:05</span> </span>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %} 
+
+{% block jsInline %}
+
+{% endblock %}

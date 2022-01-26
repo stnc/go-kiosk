@@ -1,0 +1,297 @@
+
+
+body {
+  background-color: #000;
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.stnc-kiosk-top {
+  max-height: 82cm;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.stnc-kiosk-bottom {
+  max-height: 38m;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+/* Show the controls (hidden at the start by default) */
+.video-js .vjs-control-bar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+
+
+#vjs_video_3_html5_api {
+  text-align: center;
+  margin: auto;
+}
+
+.main {
+  margin-top: 50px;
+}
+
+/*https://img.otelz.com/s3/placeimages/turkey/icanadolu/kayseri_kayseri-sehir-merkezi-9a9f3b.jpg*/
+.weather-panel {
+  /* background-image: url("imageedit_6_3730365362.jpg"); */
+  /*background-image: url("imageedit_1_9413438685.jpg");*/
+  /*  background-image: url("https://p.w3layouts.com/demos/june-2016/09-06-2016/new_york_weather_widget/web/images/city.jpg");*/
+  /*  background-image: url("https://pixahive.com/wp-content/uploads/2020/08/Sea-Shell-Black-and-White-7574-pixahive.jpg");*/
+  background-image: url("colored-smoke-on-black-background.jpg");
+  background-size: cover;
+  border-radius: 5px;
+  /* box-shadow: 25px 25px 40px 0px rgba(0, 0, 0, 0.33); */
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  padding: 5px;
+  border: 0.1px solid #ddd;
+}
+
+.weather-panel small {
+  color: inherit;
+  font-size: 50%;
+}
+
+.weather-panel .weather-panel-top {
+  padding-left: 15px;
+}
+
+.weather-panel ul.forecast>li {
+  border-top: 1px solid #fff;
+  padding-top: 10px;
+}
+
+.weather-panel .temperature>span {
+  font-size: 2em;
+}
+
+/*CLOCK */
+
+/* CLOCK */
+
+/*DIGITAL CLOCK FONT*/
+
+@font-face {
+  font-family: 'digital-7';
+  src: url('digital-7.ttf');
+}
+
+
+
+/* DAYS OF THE WEEK */
+
+div.days {
+  margin: 0 auto;
+  color: #131212;
+}
+
+div.days .day {
+  display: inline-block;
+  color: #ffffff;
+  font-family: 'digital-7', sans-serif;
+}
+
+div.days .day p {
+  font-size: 12px;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: 'digital-7', sans-serif;
+
+}
+
+/* CLOCK */
+
+div.clock {
+  margin: 5px 0;
+  align-items: center;
+  text-align: center;
+}
+
+div.clock div {
+  display: inline-block;
+  position: relative;
+  color: #ffffff;
+  height: 85px;
+  text-align: center;
+  font-family: 'digital-7', sans-serif;
+}
+
+div.clock div p {
+  font-size: 75px;
+  position: relative;
+  z-index: 74;
+  color: #ffffff;
+  font-family: 'digital-7', sans-serif;
+  /* padding: 0 13px; */
+}
+
+.tarih {
+  display: block;
+  font-size: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+div.clock .placeholder {
+  color: #131212;
+  position: absolute;
+  top: 0;
+  z-index: 50;
+}
+
+div.clock .meridian {
+  margin-left: 15px;
+}
+
+/*END CLOCK*/
+
+/* AM OR PM*/
+
+.am-pm {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  width: 20px;
+}
+
+div.am-pm div p {
+  font-size: 12px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.am,
+.pm {
+  color: #131212;
+}
+
+/*CLASS THAT CHANGES COLOR OF TEXT TO APPEAR LIKE ITS "ON"*/
+
+.light-on {
+  color: #ffffff;
+}
+
+
+
+.widget-Weather {
+  background: linear-gradient(to bottom right, #3cc0fe 20%, #0066ff);
+  border-radius: 6px;
+  box-shadow: 0px 60px 80px -20px rgb(39 165 253 / 40%);
+  position: relative;
+  overflow: hidden;
+}
+
+.single-weather-widget {
+  /* background: linear-gradient(to bottom right, #3cc0fe 20%, #0066ff); */
+  background: #0066ff;
+  border-radius: 6px;
+
+}
+
+.single-weather-widget .temperature {
+  color: white;
+  font-weight: 100;
+  font-size: 5em;
+}
+
+.single-weather-widget figure img {
+  padding: 25px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+
+.single-weather-widget .summary {
+  color: #d2e9fa;
+  font-size: 2em;
+  font-weight: 300;
+  width: 260px;
+  margin-top: -16px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #9cd0ff;
+  margin-left: 8px;
+}
+
+.single-weather-widget .precipitation {
+  margin-top: 16px;
+}
+
+.single-weather-widget .precipitation,
+.single-weather-widget .wind {
+  color: #d2e9fa;
+  font-size: 1.6em;
+  font-weight: 300;
+  margin-left: 8px;
+}
+
+.single-weather-widget .summaryText {
+  margin: 0;
+text-transform:capitalize;
+}
+
+.single-weather-widget .wind {
+  margin-top: 4px;
+}
+
+
+.single-weather-widget .details {
+  font-family: Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 30px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.dollar {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.dollar i {
+  padding-right: 20px;
+  color: tomato;
+}
+
+.dollar i,
+.dollar span {
+  font-size: 1.5em;
+}
+
+.dollar span {
+  color: white;
+  font-weight: bold;
+
+}
+
+.list-inline.forecast {
+  margin-bottom: 0;
+}
+
+.text-black {
+  color: #000;
+}
+
+.swiper-slide-active img {
+  display: block !important;
+}
+
+.swiper-slide img {
+  display: none;
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  {% include "header.html" %}
+
+</head>
+
+<body>
+
+  <div class="container-fluid ">
+    {% block content %}{% endblock %}
+    
+  </div>
+
+
+  {% include "footer.html" %}
+
+  {% include "footerJSfiles.html" %}
+  {% block jsInline %}{% endblock %}
+
+</body>
+
+           <!-- <div class="swiper-container-weather">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="weather-panel">
+                        <div class="row">
+
+                          <div class="col-sm-8 col-lg-8">
+                            <div class="weather-panel-top">
+                              <h2>Kayseri<br><small>Nem Oranı: %70</small></h2>
+                              <p class="h3"><i class="mi mi-fw mi-lg mi-rain-heavy"></i> hafif kar yağışlı</p>
+                            </div>
+
+                          </div>
+                          <div class="col-sm-4 col-lg-4 text-center">
+                            <div class="h1 temperature">
+                              <span>12°</span>
+                              <br>
+                              <small>8° / 13°</small>
+                            </div>
+                          </div>
+
+
+                          <div class="col-lg-12">
+                            <ul class="list-inline row forecast">
+                              <li class="col-xs-4 col-sm-2 text-center">
+                                <h3 class="h5">Pzt</h3>
+                                <p><i class="mi mi-fw mi-2x mi-cloud-sun"></i><br>9°/18°</p>
+                              </li>
+                              <li class="col-xs-4 col-sm-2 text-center">
+                                <h3 class="h5">Salı</h3>
+                                <p><i class="mi mi-fw mi-2x mi-sun"></i><br>12°/23°</p>
+                              </li>
+                              <li class="col-xs-4 col-sm-2 text-center">
+                                <h3 class="h5">Çar</h3>
+                                <p><i class="mi mi-fw mi-2x mi-cloud-sun"></i><br>14°/24°</p>
+                              </li>
+                              <li class="col-xs-4 col-sm-2 text-center">
+                                <h3 class="h5">Per</h3>
+                                <p><i class="mi mi-fw mi-2x mi-rain"></i><br>15°/23°</p>
+                              </li>
+                              <li class="col-xs-4 col-sm-2 text-center">
+                                <h3 class="h5">Cum</h3>
+                                <p><i class="mi mi-fw mi-2x mi-rain-heavy"></i><br>15°/22°</p>
+                              </li>
+                              <li class="col-xs-4 col-sm-2 text-center">
+                                <h3 class="h5">Cmt</h3>
+                                <p><i class="mi mi-fw mi-2x mi-clouds"></i><br>12°/17°</p>
+                              </li>
+
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+
+                      <div class="single-weather-widget">
+                        <div class="row">
+                          <div class="col-sm-8 col-md-8 ">
+                            <div class="details">
+                              <div class="temperature">10°</div>
+                              <div class="summary">
+                                <p class="summaryText">Orta şiddetli yağmur </p>
+                              </div>
+                              <div class="precipitation">Gece Sıcaklığı: 4° </div>
+                              <div class="wind">Nem: %58</div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4 col-md-4">
+                            <figure class="mx-auto justify-content-center align-self-center float-right">
+                              <img src="https://image.flaticon.com/icons/svg/143/143788.svg" height="150px"
+                                width="250px" class="img-fluid" alt="">
+                            </figure>
+
+                          </div>
+                        </div>
+                    
+                      </div>
+                    
+                    </div>
+
+                  </div>
+                </div>  -->
+
+</html>

@@ -1,0 +1,234 @@
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.2.5/video.min.js"></script>
+<script>
+  var swiper = new Swiper('.swiper-container', {
+
+    autoHeight: false, //enable auto height
+    spaceBetween: 20,
+    centeredSlides: true,
+    effect: 'fade',
+    autoplay: {
+      delay: 30000,
+      disableOnInteraction: false,
+    },
+    loop: true,
+    // Disable preloading of all images
+    preloadImages: true,
+    // Enable lazy loading
+    keyboard: {
+      enabled: false,
+      onlyInViewport: false,
+    },
+    mousewheel: {
+      invert: false,
+    },
+    lazy: false,
+  });
+
+  [...document.querySelectorAll('video')].forEach(video => {
+    video.classList.add('video-js');
+    video.classList.add('vjs-default-skin');
+    video.classList.add('vjs-big-play-centered');
+    videojs(video, {
+      fluid: true,
+      autoplay: true
+    });
+  });
+
+
+
+  //invokes functions as soon as window loads
+  window.onload = function () {
+    time();
+    ampm();
+    //   whatDay();
+    setInterval(function () {
+      time();
+      ampm();
+      //   whatDay();
+    }, 1000);
+  };
+
+  var amPmDisplay = false;
+  //gets current time and changes html to reflect it
+  function time() {
+    var date = new Date(),
+      hours = date.getHours(),
+      minutes = date.getMinutes(),
+      seconds = date.getSeconds();
+
+    //make clock a 12 hour clock instead of 24 hour clock
+    if (amPmDisplay) {
+      hours = (hours > 12) ? (hours - 12) : hours;
+    }
+
+
+    //invokes function to make sure number has at least two digits
+    hours = addZero(hours);
+    minutes = addZero(minutes);
+    seconds = addZero(seconds);
+
+    //changes the html to match results
+    document.getElementsByClassName('hours')[0].innerHTML = hours;
+    document.getElementsByClassName('minutes')[0].innerHTML = minutes;
+    document.getElementsByClassName('seconds')[0].innerHTML = seconds;
+    
+
+  }
+
+  //turns single digit numbers to two digit numbers by placing a zero in front
+  function addZero(val) {
+    return (val <= 9) ? ("0" + val) : val;
+  }
+
+  //lights up either am or pm on clock
+  function ampm() {
+    var date = new Date(),
+      hours = date.getHours()
+      // am = document.getElementsByClassName("am")[0].classList,
+      // pm = document.getElementsByClassName("pm")[0].classList
+      ;
+
+    if (amPmDisplay) {
+      (hours >= 12) ? pm.add("light-on") : am.add("light-on");
+      (hours >= 12) ? am.remove("light-on") : pm.remove("light-on");
+    }
+
+  }
+
+  //lights up what day of the week it is
+  function whatDay() {
+    var date = new Date(),
+      currentDay = date.getDay(),
+      days = {
+        0: "sunday",
+        1: "monday",
+        2: "tuesday",
+        3: "wednesday",
+        4: "thursday",
+        5: "friday",
+        6: "saturday"
+      },
+      currentDayHTML = document.getElementsByClassName(days[currentDay])[0].innerHTML,
+      currentDayClass = document.getElementsByClassName(days[currentDay])[0].classList,
+      previousDayClass = document.getElementsByClassName(days[currentDay - 1])[0].classList;
+
+    //not quite right.  doesnt remove light on Saturday to Sunday switch due to days array
+    currentDayClass.add("light-on");
+    previousDayClass.remove("light-on");
+
+  }
+
+  /*
+      var swiper = new Swiper('.swiper-container-weather', {
+        effect: 'cube',
+        grabCursor: true,
+        cubeEffect: {
+          shadow: true,
+          slideShadows: true,
+          shadowOffset: 20,
+          shadowScale: 0.94,
+        },
+        autoplay: {
+          delay: 10000,
+          disableOnInteraction: false,
+        },
+        loop: true,
+        // Disable preloading of all images
+        preloadImages: true,
+        // Enable lazy loading
+        keyboard: {
+          enabled: false,
+          onlyInViewport: false,
+        },
+        mousewheel: {
+          invert: false,
+        },
+        lazy: true,
+      });
+  */
+
+</script>
+
+<script>
+  //1000 one second 
+  //1 minute  =  60*1000 = 60000 one minute 
+
+
+  
+  // 15 minute 15*60000
+  //45 minute 
+  // var timeOut =45*60000;
+  var timeOut ={{pageRenewTime}} * 60000;
+  setInterval(function () {
+    ajaxCall() ; 
+  },
+    timeOut);
+
+
+  function ajaxCall() {
+    fetch("http://localhost:8888/ajaxApi?bina={{EkranId}}", {
+      method: 'GET',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          console.log("error")
+        }
+      }) 
+      .then(data => {
+        console.log(data.renewal)
+        document.getElementById("jsonDollarData").innerHTML=data.jsonData.dolar;
+        document.getElementById("jsonEuroData").innerHTML=data.jsonData.euro;
+        document.getElementById("jsonAltinData").innerHTML=data.jsonData.altin;
+        document.getElementById("jsonCeyrekAltinData").innerHTML=data.jsonData.ceyrek_altin;
+        document.getElementById("weatherTodayDegreeJson").innerHTML=data.jsonData.weatherTodayDegree;
+        document.getElementById("weatherTodayDescriptionJson").innerHTML=data.jsonData.weatherTodayDescription;
+        document.getElementById("weatherTodayDescriptionJson").innerHTML=data.jsonData.weatherTodayDescription;
+        document.getElementById("weatherTodayNightJson").innerHTML=data.jsonData.weatherTodayNight;
+        document.getElementById("weatherTodayNightJson").innerHTML=data.jsonData.weatherTodayNight;
+        document.getElementById("weatherTodayHumidityJson").innerHTML=data.jsonData.weatherTodayHumidity;
+        document.getElementById("weatherTodayIconJson").src=data.jsonData.weatherTodayIcon;
+  
+        if (data.jsonData.pageRenewStatus ) {
+          location.reload()
+        } 
+      //  else if (data.jsonData.location_Href ) {
+      //     window.location.href = data.jsonData.location_Href_Path ;
+      //   } 
+
+        else {
+          console.log("error")
+        }
+      })
+      .catch((error) => {
+        console.log("error")
+      });
+  }
+
+
+
+  
+
+  var aylar = new Array("Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık");
+          var gunler = new Array("Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi");
+          function tarih() {
+              var now = new Date();
+              var yil = now.getFullYear();
+              var ay = now.getMonth();
+              var gun = now.getDate();
+              var haftagun = now.getDay();       
+            //  document.getElementById("tarih").innerHTML = gun + " " + aylar[ay] + " " + yil + " " + gunler[haftagun] ; //yıl bilgisi var 
+              document.getElementById("tarih").innerHTML = gun + " " + aylar[ay] + " " + gunler[haftagun] ;
+      
+          }
+
+        
+        tarih()
+</script>
+
+{% for jsURL in jsList %}
+<script src="{{jsURL}}"></script>
+{% endfor %}

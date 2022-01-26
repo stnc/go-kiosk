@@ -1,0 +1,76 @@
+<!--Loop over the `payload` variable, which is the list of articles-->
+{% extends "../app.html" %} {% block content %}
+ {% set RootName = 'admin-gKurban' %} 
+ {% set routerName ='admin/gKurban' %}
+<style>
+    .text-decoration-line-through {
+        text-decoration: line-through !important;
+    }
+</style>
+
+
+
+{% endblock %}
+
+
+{% block jsInline %}
+
+
+<script src="/assets/admin/js/jquery.countdown.min.js"></script>
+<script>
+
+
+    
+
+
+(function ($) {
+
+"use strict";
+
+
+//NORMAL TIMES COUNTDOWN
+
+if(isExists('#normal-countdown')){
+var date = $('#normal-countdown').data('date');
+$('#normal-countdown').countdown(date, function(event) {
+  var $this = $(this).html(event.strftime(''
+    + '<div class="time-sec"><h3 class="main-time">%D</h3> <span>Gün</span></div>'
+    + '<div class="time-sec"><h3 class="main-time">%H</h3> <span>Saat</span></div>'
+    + '<div class="time-sec"><h3 class="main-time">%M</h3> <span>Dakika</span></div>'
+    + '<div class="time-sec"><h3 class="main-time">%S</h3> <span>Saniye</span></div>'));
+});
+}
+
+
+if(isExists('#kurban-countdown')){
+var date = $('#kurban-countdown').data('date');
+$('#kurban-countdown').countdown(date, function(event) {
+  var $this = $(this).html(event.strftime(''
+    + '<div class="time-sec"><h3 class="main-time">%D</h3> <span>Gün</span></div>'
+    + '<div class="time-sec"><h3 class="main-time">%H</h3> <span>Saat</span></div>'
+    + '<div class="time-sec"><h3 class="main-time">%M</h3> <span>Dakika</span></div>'
+    + '<div class="time-sec"><h3 class="main-time">%S</h3> <span>Saniye</span></div>'));
+});
+}
+
+
+
+
+
+
+
+})(jQuery);
+
+
+
+function isExists(elem){
+	if ($(elem).length > 0) { 
+		return true;
+	}
+	return false;
+}
+
+</script>
+
+
+{% endblock %}
